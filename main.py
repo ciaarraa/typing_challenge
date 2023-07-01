@@ -1,15 +1,21 @@
 from urllib.request import urlopen
 from difflib import SequenceMatcher
 import time
+import sys
 
 if __name__ != '__main__':
     sys.exit(1)
 
 def get_sentence():
-    text = urlopen("https://baconipsum.com/api/?type=meat-and-filler").read(2000).decode()
-    text = text[2:text.find(".")]
-    return text
-    
+     try:{
+             sentence :=  urlopen("https://baconipsum.com/api/?type=meat-and-filler").read(2000).decode(),
+             sentence := sentence[2:text.find(".")]
+             }
+     except:{
+             sentence := "Bacon has gone horribly wrong"
+             }
+     return sentence
+
 def give_sentence_to_user():
     sentence = get_sentence()
     print(sentence)
