@@ -1,4 +1,5 @@
 from urllib.request import urlopen
+from difflib import SequenceMatcher
 import time
 
 if __name__ != '__main__':
@@ -10,25 +11,29 @@ def get_sentence():
     return text
     
 def give_sentence_to_user():
-    print(get_sentence())
+    sentence = get_sentence()
+    print(sentence)
+    return sentence
 
 def time_method_execution(method):
     start = time.time()
-    method()
+    answer = method()
     end = time.time()
     total_time = end - start
-    return total_time
+    return [total_time, answer]
 
 def get_input():
-    input()
+    return input()
 
 def begin_game():
     get_username()
     print("Type the following sentence as fast as you can")
     countdown()
-    give_sentence_to_user()
+    sentence = give_sentence_to_user()
     time = time_method_execution(get_input)
-    print(f"Nice, that took you: {round(time, 2)} seconds")
+    score = calcualte_user_score(sentence, time[1])
+    print(f"Your score is: {score}")
+    print(f"Nice, that took you: {round(time[0], 2)} seconds")
 
 def countdown():
     print("3", end="..", flush=True)
@@ -41,4 +46,9 @@ def countdown():
 
 def get_username():
     name = input("Enter your name: ")
+
+def calcualte_user_score(sentence, answer):
+     score = SequenceMatcher(lambda x: x in " ", sentence, answer)
+     return score.ratio()
+
 begin_game()
