@@ -32,6 +32,13 @@ def get_input():
     return input()
 
 def begin_game():
+    play_game = "y"
+    while play_game == "y":
+        start_game()
+        play_game = input("Press y to play again\n")
+    sys.exit(0)
+
+def start_game():
     get_username()
     print("Type the following sentence as fast as you can")
     countdown()
