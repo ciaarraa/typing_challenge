@@ -7,13 +7,11 @@ if __name__ != '__main__':
     sys.exit(1)
 
 def get_sentence():
-     try:{
-             sentence :=  urlopen("https://baconipsum.com/api/?type=meat-and-filler").read(2000).decode(),
-             sentence := sentence[2:text.find(".")]
-             }
-     except:{
-             sentence := "Bacon has gone horribly wrong"
-             }
+     try:
+             sentence =  urlopen("https://baconipsum.com/api/?type=meat-and-filler").read(2000).decode()
+             sentence = sentence[2:sentence.find(".")]
+     except:
+         sentence = "Bacon has gone horribly wrong"
      return sentence
 
 def give_sentence_to_user():
@@ -35,7 +33,7 @@ def begin_game():
     play_game = "y"
     while play_game == "y":
         start_game()
-        play_game = input("Press y to play again\n")
+        play_game = input("Press y to play again and any other key to exit\n")
     sys.exit(0)
 
 def start_game():
@@ -43,10 +41,12 @@ def start_game():
     print("Type the following sentence as fast as you can")
     countdown()
     sentence = give_sentence_to_user()
-    time = time_method_execution(get_input)
-    score = calcualte_user_score(sentence, time[1])
+    time_and_answer = time_method_execution(get_input)
+    accuracy  = calcualte_user_score(sentence, time_and_answer[1])
+    print(f"Your accuracy was {accuracy}")
+    score = calculate_score(time_and_answer[0], accuracy)
     print(f"Your score is: {score}")
-    print(f"Nice, that took you: {round(time[0], 2)} seconds")
+    print(f"Nice, that took you: {round(time_and_answer[0], 2)} seconds")
 
 def countdown():
     print("3", end="..", flush=True)
@@ -63,5 +63,9 @@ def get_username():
 def calcualte_user_score(sentence, answer):
      score = SequenceMatcher(lambda x: x in " ", sentence, answer)
      return score.ratio()
+
+def calculate_score(time, accuracy):
+    score = 100*(1/time) + 100 * accuracy
+    return round(score,2)
 
 begin_game()
