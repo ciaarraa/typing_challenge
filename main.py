@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from difflib import SequenceMatcher
 import time
 import sys
+from models.leaderboard import Leaderboard
 
 if __name__ != '__main__':
     sys.exit(1)
@@ -30,14 +31,15 @@ def get_input():
     return input()
 
 def begin_game():
+    leaderboard = Leaderboard()
     play_game = "y"
     while play_game == "y":
-        start_game()
+        start_game(leaderboard)
         play_game = input("Press y to play again and any other key to exit\n")
-    sys.exit(0)
+    leaderboard.show()
 
-def start_game():
-    get_username()
+def start_game(leaderboard):
+    name = get_username()
     print("Type the following sentence as fast as you can")
     countdown()
     sentence = give_sentence_to_user()
@@ -47,6 +49,7 @@ def start_game():
     score = calculate_score(time_and_answer[0], accuracy)
     print(f"Your score is: {score}")
     print(f"Nice, that took you: {round(time_and_answer[0], 2)} seconds")
+    leaderboard.add(name, score, accuracy)
 
 def countdown():
     print("3", end="..", flush=True)
@@ -59,6 +62,7 @@ def countdown():
 
 def get_username():
     name = input("Enter your name: ")
+    return name
 
 def calcualte_user_score(sentence, answer):
      score = SequenceMatcher(lambda x: x in " ", sentence, answer)
@@ -69,3 +73,4 @@ def calculate_score(time, accuracy):
     return round(score,2)
 
 begin_game()
+
