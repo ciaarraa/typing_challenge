@@ -9,7 +9,7 @@ if __name__ != '__main__':
 
 def get_sentence():
      try:
-             sentence =  urlopen("https://baconipsum.com/api/?type=meat-and-filler").read(2000).decode()
+             sentence =  urlopen("https://baconipsum.com/api/?type=meat-and-filler&sentences=1").read(2000).decode()
              sentence = sentence[2:sentence.find(".")]
      except:
          sentence = "Bacon has gone horribly wrong"

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Leaderboard {% endblock %}</h1>
+     {% for record in leaderboard %}
+            <h2>{{ record['name'] }}</h2>
+            <p> Accuracy: {{ record['accuracy'] }} </p>
+            <p> Time: {{ record['time'] }} </p>
+            <p> Score: {{ record['score'] }} </p>
+        <span class="badge badge-primary">{{ record['created'] }}</span>
+        <hr>
+    {% endfor %}
+{% endblock %}
